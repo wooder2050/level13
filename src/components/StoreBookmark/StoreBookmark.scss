@@ -1,0 +1,33 @@
+.store-bookmark-wrapper {
+  width: 512px;
+  height: 84px;
+  box-sizing: border-box;
+  padding: 20px 0;
+  .store-bookmark-img-wrapper {
+    width: 42px;
+    height: 42px;
+    float: left;
+    .store-bookmark-img {
+      width: 100%;
+      border-radius: 5px;
+    }
+  }
+  .store-bookmark-info {
+    float: left;
+    margin-left: 8px;
+    .store-bookmark-name {
+      height: 22px;
+      font-size: 15px;
+    }
+    .store-bookmark-message {
+      color: #97a0a8;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+  }
+}
+.store-bookmark-wrapper::after {
+  content: '';
+  display: block;
+  clear: both;
+}

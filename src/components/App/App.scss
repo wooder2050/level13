@@ -1,0 +1,15 @@
+.app {
+  width: 1024px;
+  min-width: 1024px;
+  margin: 0 auto;
+  border: 1px solid red;
+}
+.itemDetail-wrapper {
+  width: 100%;
+  border: 1px solid green;
+}
+.itemDetail-wrapper::after {
+  content: '';
+  display: block;
+  clear: both;
+}
