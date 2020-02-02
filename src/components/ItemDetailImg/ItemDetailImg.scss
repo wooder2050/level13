@@ -1,10 +1,73 @@
+$highligthColor : #f23538;
+$font-default-color: #495057;
+
 .itemDetail-img-wrapper {
   width: 512px;
   float: left;
-  border: 1px solid blue;
 }
 .itemDetail-text-wrapper {
   width: 512px;
   float: left;
-  border: 1px solid gray;
+  margin: 38px 0 40px 0;
+  text-align: left;
+  box-sizing: border-box;
+  padding-right: 76px;
+  padding-left: 60px;
+  .itemDetail-title-wrapper {
+    .itemDetail-title {
+      float: left;
+      display: block;
+      color: $font-default-color;
+      font-size: 24px;
+      font-weight: 500px;
+      margin-bottom: 20px;
+      margin-right: 10px;
+    }
+    .itemDetail-free {
+      float: left;
+      color: $highligthColor;
+      font-weight: bold;
+      padding: 5px;
+      font-size: 16px;
+      border: 1px solid $highligthColor;
+      border-radius: 2px;
+    }
+  }
+  .itemDetail-title-wrapper::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  .itemDetail-prevPrice {
+    color: #c7cdd4;
+    font-size: 21px;
+    text-decoration: line-through;
+    margin-bottom: 8px;
+  }
+  .itemDetail-price-wrapper {
+    font-size: 21px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    .itemDetail-price {
+      float: left;
+      margin-right: 6px;
+    }
+    .itemDetail-discount-rate {
+      float: left;
+      color: $highligthColor;
+      font-weight: bold;
+    }
+  }
+  .itemDetail-price-wrapper::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  .itemDetail-total {
+    margin: 20px 0 32px 0;
+    text-align: right;
+    .itemDetail-totalPrice {
+      color: $highligthColor;
+    }
+  }
 }

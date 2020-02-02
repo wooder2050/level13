@@ -10,6 +10,11 @@
       width: 100%;
       cursor: pointer;
     }
+    
+  }
+  .sub-img-wrapper:hover {
+    opacity: 0.5;
+    ;
   }
 }
 .itemDetail-subImg-wrapper::after {

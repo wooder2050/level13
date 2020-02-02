@@ -1,5 +1,10 @@
 import { combineReducers } from "redux";
-import { LOAD_DATA } from "../constants/actionTypes";
+import {
+  LOAD_DATA,
+  OPTION_OPEN,
+  OPTION_CHOICE,
+  OPTION_CLOSE
+} from "../constants/actionTypes";
 
 const initialState = {
   name: null,
@@ -10,7 +15,9 @@ const initialState = {
   images: null,
   options: null,
   html: null,
-  partner: null
+  partner: null,
+  optionState: null,
+  toggleState: false
 };
 export function loadReducers(state = initialState, action) {
   switch (action.type) {
@@ -29,6 +36,28 @@ export function loadReducers(state = initialState, action) {
           partner: action.response.partner
         }
       );
+    case OPTION_OPEN:
+      let newState = [];
+      if (action.optionState === null) {
+        newState.push(0);
+      } else {
+        newState = action.optionState.slice();
+        if (newState[newState.length - 1] !== 0) newState.push(0);
+      }
+      return Object.assign(
+        { ...state },
+        { optionState: newState, toggleState: true }
+      );
+    case OPTION_CHOICE:
+      let optionState = action.optionState.slice();
+      optionState[optionState.length - 1] = action.option;
+
+      return Object.assign(
+        { ...state },
+        { optionState: optionState, toggleState: false }
+      );
+    case OPTION_CLOSE:
+      return Object.assign({ ...state }, { toggleState: false });
     default:
       return state;
   }

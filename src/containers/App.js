@@ -12,7 +12,9 @@ const mapStateToProps = state => {
     images,
     options,
     html,
-    partner
+    partner,
+    optionState,
+    toggleState
   } = state.load;
   return {
     name,
@@ -23,7 +25,9 @@ const mapStateToProps = state => {
     images,
     options,
     html,
-    partner
+    partner,
+    optionState,
+    toggleState
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -32,6 +36,26 @@ const mapDispatchToProps = dispatch => {
       dispatch({
         type: "LOAD_DATA",
         response
+      });
+    },
+    optionOpen(optionState, toggleState) {
+      dispatch({
+        type: "OPTION_OPEN",
+        optionState,
+        toggleState
+      });
+    },
+    optionChoice(optionState, toggleState, option) {
+      dispatch({
+        type: "OPTION_CHOICE",
+        optionState,
+        toggleState,
+        option
+      });
+    },
+    optionClose() {
+      dispatch({
+        type: "OPTION_CLOSE"
       });
     }
   };
