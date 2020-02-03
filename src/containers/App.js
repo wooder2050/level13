@@ -14,7 +14,8 @@ const mapStateToProps = state => {
     html,
     partner,
     optionState,
-    toggleState
+    toggleState,
+    selectedOptions
   } = state.load;
   return {
     name,
@@ -27,7 +28,8 @@ const mapStateToProps = state => {
     html,
     partner,
     optionState,
-    toggleState
+    toggleState,
+    selectedOptions
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -45,17 +47,37 @@ const mapDispatchToProps = dispatch => {
         toggleState
       });
     },
-    optionChoice(optionState, toggleState, option) {
+    optionChoice(
+      optionState,
+      toggleState,
+      option,
+      contentsLength,
+      selectedOptions
+    ) {
       dispatch({
         type: "OPTION_CHOICE",
         optionState,
         toggleState,
-        option
+        option,
+        contentsLength,
+        selectedOptions
       });
     },
     optionClose() {
       dispatch({
         type: "OPTION_CLOSE"
+      });
+    },
+    optionPlus(selectedOptions) {
+      dispatch({
+        type: "OPTION_PLUS",
+        selectedOptions
+      });
+    },
+    optionMinus(selectedOptions) {
+      dispatch({
+        type: "OPTION_MINUS",
+        selectedOptions
       });
     }
   };

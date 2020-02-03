@@ -19,9 +19,12 @@ class App extends Component {
       partner,
       optionState,
       toggleState,
+      selectedOptions,
       optionOpen,
       optionChoice,
-      optionClose
+      optionClose,
+      optionPlus,
+      optionMinus
     } = this.props;
     console.log(this.props);
     return (
@@ -41,9 +44,12 @@ class App extends Component {
               discount_rate={discount_rate}
               options={options}
               optionState={optionState}
+              selectedOptions={selectedOptions}
               toggleState={toggleState}
               optionOpen={optionOpen}
               optionChoice={optionChoice}
+              optionPlus={optionPlus}
+              optionMinus={optionMinus}
             />
           </div>
           <div dangerouslySetInnerHTML={{ __html: html }}></div>

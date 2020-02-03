@@ -3,6 +3,7 @@ import MainImg from "../MainImg/MainImg";
 import SubImg from "../SubImg/SubImg";
 import StoreBookmark from "../StoreBookmark/StoreBookmark";
 import ItemDetailOptions from "../ItemDetailOptions/ItemDetailOptions";
+import SelectedOption from "../SelectedOption/SelectedOption";
 import "./ItemDetailImg.scss";
 
 class ItemDetailImg extends Component {
@@ -18,8 +19,11 @@ class ItemDetailImg extends Component {
       options,
       optionState,
       toggleState,
+      selectedOptions,
       optionOpen,
-      optionChoice
+      optionChoice,
+      optionPlus,
+      optionMinus
     } = this.props;
     function makeComma(str) {
       str = String(str);
@@ -48,8 +52,15 @@ class ItemDetailImg extends Component {
             options={options}
             optionState={optionState}
             toggleState={toggleState}
+            selectedOptions={selectedOptions}
             optionOpen={optionOpen}
             optionChoice={optionChoice}
+          />
+          <SelectedOption
+            discount_price={discount_price}
+            selectedOptions={selectedOptions}
+            optionPlus={optionPlus}
+            optionMinus={optionMinus}
           />
           <div className="itemDetail-total">
             <span className="itemDetail-totalText">총&nbsp;상품금액</span>
