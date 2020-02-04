@@ -11,4 +11,14 @@
     display: block;
     clear: both;
   }
+  .itemDetailView{
+    display: inline-block;
+    height: auto;
+    overflow: hidden;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 40px 60px;
+  }
+ 
 }

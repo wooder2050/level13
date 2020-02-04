@@ -1,0 +1,35 @@
+.itemDetail-infoTab {
+  display: inline-block;
+  width: 1024px;
+  margin: 20px auto 0 auto;
+  padding-left: 52px;
+  font-size: 12px;
+  text-align: left;
+  .itemDetail-hr {
+    height: 1px;
+    margin: 0;
+    border: none;
+    background-color: #dee2e6;
+  }
+  .itemDetail-infoTitle {
+    display: block;
+    margin-top: 23px;
+    font-size: 14px;
+  }
+  .itemDetail-infoContents {
+    margin: 16px 160px 25px 0;
+    line-height: 19px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    span {
+      display: inline-block;
+      .infoContents-title {
+        margin-right: 8px;
+        color: #868e96;
+      }
+      .infoContents-content {
+        margin-right: 16px;
+      }
+    }
+  }
+}

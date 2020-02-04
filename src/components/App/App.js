@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ItemDetailImg from "../ItemDetailImg/ItemDetailImg";
 import ErroModal from "../ErrorModal/ErrorModal";
+import Footer from "../Footer/Footer";
 import "./App.scss";
 
 class App extends Component {
@@ -67,8 +68,11 @@ class App extends Component {
               changeMainImg={changeMainImg}
             />
           </div>
-          <div dangerouslySetInnerHTML={{ __html: html }}></div>
-          <div>{html}</div>
+          <div
+            className="itemDetailView"
+            dangerouslySetInnerHTML={{ __html: html }}
+          ></div>
+          <Footer partner={partner} />
         </div>
       </>
     );
