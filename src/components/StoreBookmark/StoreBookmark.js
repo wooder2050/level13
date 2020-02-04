@@ -9,8 +9,8 @@ class StoreBookmark extends Component {
         <div className="store-bookmark-img-wrapper">
           {partner && (
             <img
-              alt="storebookmark-img"
               src={partner.photo_url}
+              alt="storebookmark-img"
               className="store-bookmark-img"
             />
           )}

@@ -26,7 +26,9 @@ class ItemDetailImg extends Component {
       optionOpen,
       optionChoice,
       optionPlus,
-      optionMinus
+      optionMinus,
+      cancelSelected,
+      changeMainImg
     } = this.props;
     let sum = 0;
     if (selectedOptions) {
@@ -41,7 +43,7 @@ class ItemDetailImg extends Component {
       <>
         <div className="itemDetail-img-wrapper">
           <MainImg photo_url={photo_url} />
-          <SubImg images={images} />
+          <SubImg images={images} changeMainImg={changeMainImg} />
           <StoreBookmark partner={partner} />
         </div>
         <div className="itemDetail-text-wrapper">
@@ -72,6 +74,7 @@ class ItemDetailImg extends Component {
             selectedOptionsCount={selectedOptionsCount}
             optionPlus={optionPlus}
             optionMinus={optionMinus}
+            cancelSelected={cancelSelected}
           />
           <div className="itemDetail-total">
             <span className="itemDetail-totalText">총&nbsp;상품금액</span>

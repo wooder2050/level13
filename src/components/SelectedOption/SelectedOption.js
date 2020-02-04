@@ -11,7 +11,8 @@ class SelectedOption extends Component {
       selectedOptions,
       selectedOptionsCount,
       optionPlus,
-      optionMinus
+      optionMinus,
+      cancelSelected
     } = this.props;
 
     return (
@@ -26,7 +27,10 @@ class SelectedOption extends Component {
                       typeof option[2] === "string" ? option[2] : option[2][0]
                     }`}
                   </div>
-                  <span className="itemDetail-icon-cancel">
+                  <span
+                    onClick={e => cancelSelected(selectedOptions, i)}
+                    className="itemDetail-icon-cancel"
+                  >
                     <span className="icon-cancel">+</span>
                   </span>
                 </div>

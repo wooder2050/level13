@@ -24,13 +24,7 @@ class ItemDetailOptions extends Component {
               <div className="option-select" key={i + 1}>
                 <div
                   onClick={e =>
-                    optionOpen(
-                      optionState,
-                      toggleState,
-                      i,
-                      options,
-                      optionModal
-                    )
+                    optionOpen(optionState, i, options, optionModal)
                   }
                   className="option-select-title"
                 >
@@ -46,7 +40,9 @@ class ItemDetailOptions extends Component {
                     name
                   )}
                 </div>
-                <div className="option-select-icon">
+                <div
+                  className="option-select-icon"
+                >
                   <img alt="arrow-img" className="arrow" src={arrow} />
                 </div>
                 {options.contents[i] &&
@@ -61,7 +57,6 @@ class ItemDetailOptions extends Component {
                               onClick={e =>
                                 optionChoice(
                                   optionState,
-                                  toggleState,
                                   content,
                                   options.contents.length,
                                   selectedOptionsCount,

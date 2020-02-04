@@ -3,6 +3,44 @@ export function makeComma(str) {
   return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
 }
 
+export function makeOptionList1(data, optionState, index) {
+  let result = data
+    .filter(function(data) {
+      let flag = true;
+      for (let i = 0; i < index; i++) {
+        if (data.positions[i] !== optionState[i]) flag = false;
+      }
+      return flag;
+    })
+    .map(size => size.positions[index]);
+  let optionsListElement = result.filter(
+    (item, index) => result.indexOf(item) === index
+  );
+  return optionsListElement;
+}
+
+export function makeOptionList2(data, optionState, index) {
+  let result = data
+    .filter(function(data) {
+      let flag = true;
+      for (let i = 0; i < index; i++) {
+        if (data.positions[i] !== optionState[i]) flag = false;
+      }
+      return flag;
+    })
+    .map(function(length) {
+      let result = [];
+      result.push(length.positions[2]);
+      result.push(length.data.option_price);
+      result.push(length.data.stock_count);
+      return result;
+    });
+  let optionsListElement = result.filter(
+    (item, index) => result.indexOf(item) === index
+  );
+  return optionsListElement;
+}
+
 export function hasOption(selectedOptions, currentOptions) {
   if (selectedOptions) {
     for (let i = 0; i < selectedOptions.length; i++) {

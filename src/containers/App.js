@@ -50,11 +50,10 @@ const mapDispatchToProps = dispatch => {
         response
       });
     },
-    optionOpen(optionState, toggleState, index, options, optionModal) {
+    optionOpen(optionState, index, options, optionModal) {
       dispatch({
         type: "OPTION_OPEN",
         optionState,
-        toggleState,
         index,
         options,
         optionModal
@@ -62,7 +61,6 @@ const mapDispatchToProps = dispatch => {
     },
     optionChoice(
       optionState,
-      toggleState,
       option,
       contentsLength,
       selectedOptionsCount,
@@ -71,16 +69,10 @@ const mapDispatchToProps = dispatch => {
       dispatch({
         type: "OPTION_CHOICE",
         optionState,
-        toggleState,
         option,
         contentsLength,
         selectedOptionsCount,
         selectedOptions
-      });
-    },
-    optionClose() {
-      dispatch({
-        type: "OPTION_CLOSE"
       });
     },
     optionPlus(selectedOptionsCount, index, count) {
@@ -102,6 +94,19 @@ const mapDispatchToProps = dispatch => {
     closeErrorModal() {
       dispatch({
         type: "CLOSE_ERROR_MODAL"
+      });
+    },
+    cancelSelected(selectedOptions, index) {
+      dispatch({
+        type: "CANCEL_SELECTED",
+        selectedOptions,
+        index
+      });
+    },
+    changeMainImg(image) {
+      dispatch({
+        type: "CHANGE_MAIN_IMG",
+        image
       });
     }
   };

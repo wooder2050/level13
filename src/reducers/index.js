@@ -3,12 +3,17 @@ import {
   LOAD_DATA,
   OPTION_OPEN,
   OPTION_CHOICE,
-  OPTION_CLOSE,
   OPTION_PLUS,
   OPTION_MINUS,
-  CLOSE_ERROR_MODAL
+  CLOSE_ERROR_MODAL,
+  CANCEL_SELECTED,
+  CHANGE_MAIN_IMG
 } from "../constants/actionTypes";
-import { hasOption } from "../reducers/utility";
+import {
+  hasOption,
+  makeOptionList1,
+  makeOptionList2
+} from "../reducers/utility";
 
 const initialState = {
   name: null,
@@ -58,23 +63,10 @@ export function loadReducers(state = initialState, action) {
       } else if (action.index === action.options.contents.length - 1) {
         newState = action.optionState.slice();
         if (newState[newState.length - 1] !== 0) newState.push(0);
-        let result = action.options.data
-          .filter(function(data) {
-            let flag = true;
-            for (let i = 0; i < action.index; i++) {
-              if (data.positions[i] !== action.optionState[i]) flag = false;
-            }
-            return flag;
-          })
-          .map(function(length) {
-            let result = [];
-            result.push(length.positions[2]);
-            result.push(length.data.option_price);
-            result.push(length.data.stock_count);
-            return result;
-          });
-        optionsListElement = result.filter(
-          (item, index) => result.indexOf(item) === index
+        optionsListElement = makeOptionList2(
+          action.options.data,
+          action.optionState,
+          action.index
         );
         if (action.index + 1 > action.optionModal.length) {
           optionsList = action.optionModal.slice();
@@ -88,17 +80,10 @@ export function loadReducers(state = initialState, action) {
           if (newState[newState.length - 1] !== 0) newState.push(0);
         }
       } else {
-        let result2 = action.options.data
-          .filter(function(data) {
-            let flag = true;
-            for (let i = 0; i < action.index; i++) {
-              if (data.positions[i] !== action.optionState[i]) flag = false;
-            }
-            return flag;
-          })
-          .map(size => size.positions[action.index]);
-        optionsListElement = result2.filter(
-          (item, index) => result2.indexOf(item) === index
+        optionsListElement = makeOptionList1(
+          action.options.data,
+          action.optionState,
+          action.index
         );
         if (action.index + 1 > action.optionModal.length) {
           optionsList = action.optionModal.slice();
@@ -190,8 +175,6 @@ export function loadReducers(state = initialState, action) {
       } else {
         return Object.assign({ ...state });
       }
-    case OPTION_CLOSE:
-      return Object.assign({ ...state }, { toggleState: false });
     case CLOSE_ERROR_MODAL:
       return Object.assign(
         { ...state },
@@ -199,6 +182,22 @@ export function loadReducers(state = initialState, action) {
           optionCountError: false,
           soldOutMsg: false,
           alreadySelectedMsg: false
+        }
+      );
+    case CANCEL_SELECTED:
+      let newSelectedOption = action.selectedOptions.slice();
+      newSelectedOption.splice(action.index, 1);
+      return Object.assign(
+        { ...state },
+        {
+          selectedOptions: newSelectedOption
+        }
+      );
+    case CHANGE_MAIN_IMG:
+      return Object.assign(
+        { ...state },
+        {
+          photo_url: action.image
         }
       );
     default:

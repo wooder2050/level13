@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ItemDetailImg from "../ItemDetailImg/ItemDetailImg";
+import ErroModal from "../ErrorModal/ErrorModal";
 import "./App.scss";
 
 class App extends Component {
@@ -27,42 +28,22 @@ class App extends Component {
       alreadySelectedMsg,
       optionOpen,
       optionChoice,
-      optionClose,
       optionPlus,
       optionMinus,
-      closeErrorModal
+      closeErrorModal,
+      cancelSelected,
+      changeMainImg
     } = this.props;
     console.log(this.props);
     return (
       <>
         <div className="app">
-          {toggleState && (
-            <div onClick={optionClose} className="toggle-wrapper"></div>
-          )}
-          {optionCountError && (
-            <div className="error-modal-wrapper">
-              <div className="error-modal-text">수량이 부족합니다.</div>
-              <div onClick={closeErrorModal} className="error-modal-btn">
-                닫기
-              </div>
-            </div>
-          )}
-          {soldOutMsg && (
-            <div className="error-modal-wrapper">
-              <div className="error-modal-text">품절입니다.</div>
-              <div onClick={closeErrorModal} className="error-modal-btn">
-                닫기
-              </div>
-            </div>
-          )}
-          {alreadySelectedMsg && (
-            <div className="error-modal-wrapper">
-              <div className="error-modal-text">이미 있는 상품입니다.</div>
-              <div onClick={closeErrorModal} className="error-modal-btn">
-                닫기
-              </div>
-            </div>
-          )}
+          <ErroModal
+            optionCountError={optionCountError}
+            soldOutMsg={soldOutMsg}
+            alreadySelectedMsg={alreadySelectedMsg}
+            closeErrorModal={closeErrorModal}
+          />
           <div className="itemDetail-wrapper">
             <ItemDetailImg
               photo_url={photo_url}
@@ -82,6 +63,8 @@ class App extends Component {
               optionChoice={optionChoice}
               optionPlus={optionPlus}
               optionMinus={optionMinus}
+              cancelSelected={cancelSelected}
+              changeMainImg={changeMainImg}
             />
           </div>
           <div dangerouslySetInnerHTML={{ __html: html }}></div>
