@@ -5,8 +5,10 @@ import {
   OPTION_CHOICE,
   OPTION_CLOSE,
   OPTION_PLUS,
-  OPTION_MINUS
+  OPTION_MINUS,
+  CLOSE_ERROR_MODAL
 } from "../constants/actionTypes";
+import { hasOption } from "../reducers/utility";
 
 const initialState = {
   name: null,
@@ -18,10 +20,14 @@ const initialState = {
   options: null,
   html: null,
   partner: null,
-  data: null,
+  optionModal: null,
   optionState: null,
   toggleState: false,
-  selectedOptions: null
+  selectedOptions: null,
+  selectedOptionsCount: null,
+  optionCountError: null,
+  soldOutMsg: null,
+  alreadySelectedMsg: null
 };
 export function loadReducers(state = initialState, action) {
   switch (action.type) {
@@ -37,71 +43,164 @@ export function loadReducers(state = initialState, action) {
           images: action.response.images,
           options: action.response.options,
           html: action.response.html,
-          partner: action.response.partner
+          partner: action.response.partner,
+          optionCountError: false
         }
       );
     case OPTION_OPEN:
+      let optionsList, optionsListElement;
       let newState = [];
-      if (action.optionState === null) {
+      if (action.index === 0) {
         newState.push(0);
-      } else {
+        optionsListElement = action.options.contents[0];
+        optionsList = [];
+        optionsList.push(optionsListElement);
+      } else if (action.index === action.options.contents.length - 1) {
         newState = action.optionState.slice();
         if (newState[newState.length - 1] !== 0) newState.push(0);
+        let result = action.options.data
+          .filter(function(data) {
+            let flag = true;
+            for (let i = 0; i < action.index; i++) {
+              if (data.positions[i] !== action.optionState[i]) flag = false;
+            }
+            return flag;
+          })
+          .map(function(length) {
+            let result = [];
+            result.push(length.positions[2]);
+            result.push(length.data.option_price);
+            result.push(length.data.stock_count);
+            return result;
+          });
+        optionsListElement = result.filter(
+          (item, index) => result.indexOf(item) === index
+        );
+        if (action.index + 1 > action.optionModal.length) {
+          optionsList = action.optionModal.slice();
+          optionsList.push(optionsListElement);
+          newState = action.optionState.slice();
+          if (newState[newState.length - 1] !== 0) newState.push(0);
+        } else {
+          optionsList = action.optionModal.slice(0, action.index);
+          optionsList.push(optionsListElement);
+          newState = action.optionState.slice(0, action.index);
+          if (newState[newState.length - 1] !== 0) newState.push(0);
+        }
+      } else {
+        let result2 = action.options.data
+          .filter(function(data) {
+            let flag = true;
+            for (let i = 0; i < action.index; i++) {
+              if (data.positions[i] !== action.optionState[i]) flag = false;
+            }
+            return flag;
+          })
+          .map(size => size.positions[action.index]);
+        optionsListElement = result2.filter(
+          (item, index) => result2.indexOf(item) === index
+        );
+        if (action.index + 1 > action.optionModal.length) {
+          optionsList = action.optionModal.slice();
+          optionsList.push(optionsListElement);
+          newState = action.optionState.slice();
+          if (newState[newState.length - 1] !== 0) newState.push(0);
+        } else {
+          optionsList = action.optionModal.slice(0, action.index);
+          optionsList.push(optionsListElement);
+          newState = action.optionState.slice(0, action.index);
+          if (newState[newState.length - 1] !== 0) newState.push(0);
+        }
       }
       return Object.assign(
         { ...state },
-        { optionState: newState, toggleState: true }
+        { optionState: newState, optionModal: optionsList, toggleState: true }
       );
     case OPTION_CHOICE:
       let optionState = action.optionState.slice();
       optionState[optionState.length - 1] = action.option;
-      let option;
+      let newOptionState, option, checkListResult;
       if (optionState.length === action.contentsLength) {
-        if (action.selectedOptions) {
-          option = action.selectedOptions.slice();
-          option.push(optionState);
+        if (optionState[optionState.length - 1][2] === 0) {
+          return Object.assign(
+            { ...state },
+            { optionState: null, soldOutMsg: true, toggleState: false }
+          );
         } else {
-          option = [];
-          optionState.push(1);
-          option.push(optionState);
+          checkListResult = hasOption(action.selectedOptions, optionState);
+
+          if (checkListResult) {
+            return Object.assign(
+              { ...state },
+              {
+                optionState: null,
+                alreadySelectedMsg: true,
+                toggleState: false
+              }
+            );
+          } else {
+            if (action.selectedOptionsCount) {
+              option = action.selectedOptionsCount.slice();
+              option.push(1);
+              newOptionState = action.selectedOptions.slice();
+              newOptionState.push(optionState);
+            } else {
+              option = [];
+              option.push(1);
+              newOptionState = [];
+              newOptionState.push(optionState);
+            }
+            return Object.assign(
+              { ...state },
+              {
+                optionState: null,
+                selectedOptions: newOptionState,
+                selectedOptionsCount: option,
+                toggleState: false
+              }
+            );
+          }
         }
-        return Object.assign(
-          { ...state },
-          { optionState: null, selectedOptions: option, toggleState: false }
-        );
       } else {
         return Object.assign(
           { ...state },
           { optionState: optionState, toggleState: false }
         );
       }
+
     case OPTION_PLUS:
-      // let optionPlus = action.selectedOptions.slice();
-      let optionPlus = [];
-      for (let i = 0; i < action.selectedOptions.length; i++) {
-        if (typeof action.selectedOptions[i] !== "string") {
-          let tmp = action.selectedOptions[i].slice();
-          optionPlus.push(tmp);
-        } else {
-          optionPlus.push(action.selectedOptions[i]);
-        }
+      if (action.selectedOptionsCount[action.index] + 1 > action.count) {
+        return Object.assign({ ...state }, { optionCountError: true });
+      } else {
+        let countArrayPlus = action.selectedOptionsCount.slice();
+        countArrayPlus[action.index] += 1;
+        return Object.assign(
+          { ...state },
+          { selectedOptionsCount: countArrayPlus }
+        );
       }
-      
-      console.log(optionPlus, action.selectedOptions);
-      optionPlus[optionPlus.length - 1] = optionPlus[optionPlus.length - 1] + 1;
-      console.log(optionPlus);
-      return Object.assign({ ...state }, { selectedOptions: optionPlus });
     case OPTION_MINUS:
-      // let optionMinus = action.selectedOptions.slice();
-      let optionMinus = [];
-      for (let i = 0; i < action.selectedOptions.length; i++) {
-        optionMinus.push(action.selectedOptions[i]);
+      if (action.selectedOptionsCount[action.index] - 1 > 0) {
+        let countArrayMinus = action.selectedOptionsCount.slice();
+        countArrayMinus[action.index] -= 1;
+        return Object.assign(
+          { ...state },
+          { selectedOptionsCount: countArrayMinus }
+        );
+      } else {
+        return Object.assign({ ...state });
       }
-      optionMinus[optionMinus.length - 1] =
-        optionMinus[optionMinus.length - 1] - 1;
-      return Object.assign({ ...state }, { selectedOptions: optionMinus });
     case OPTION_CLOSE:
       return Object.assign({ ...state }, { toggleState: false });
+    case CLOSE_ERROR_MODAL:
+      return Object.assign(
+        { ...state },
+        {
+          optionCountError: false,
+          soldOutMsg: false,
+          alreadySelectedMsg: false
+        }
+      );
     default:
       return state;
   }

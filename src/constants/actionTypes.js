@@ -4,3 +4,4 @@ export const OPTION_CHOICE = "OPTION_CHOICE";
 export const OPTION_CLOSE = "OPTION_CLOSE";
 export const OPTION_PLUS = "OPTION_PLUS";
 export const OPTION_MINUS = "OPTION_MINUS";
+export const CLOSE_ERROR_MODAL = "CLOSE_ERROR_MODAL";

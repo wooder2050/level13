@@ -2,20 +2,18 @@ import React, { Component } from "react";
 import "./SelectedOption.scss";
 import minus from "../../image/minus.svg";
 import plus from "../../image/plus.svg";
+import { makeComma } from "../../reducers/utility";
 
 class SelectedOption extends Component {
   render() {
     const {
       discount_price,
       selectedOptions,
+      selectedOptionsCount,
       optionPlus,
       optionMinus
     } = this.props;
-    function makeComma(str) {
-      str = String(str);
-      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
-    }
-    console.log(selectedOptions);
+
     return (
       <div className="itemDetail-selected-wrapper">
         {selectedOptions &&
@@ -35,26 +33,29 @@ class SelectedOption extends Component {
                 <div className="itemDetail-selected-text-container">
                   <span className="itemDetail-itemPrice">
                     {makeComma(
-                      (discount_price + option[2][1]) *
-                        option[option.length - 1]
+                      (discount_price + option[2][1]) * selectedOptionsCount[i]
                     )}
                     원
                   </span>
                   <div className="itemDetail-counter">
                     <img
-                      onClick={e => optionMinus(selectedOptions)}
+                      onClick={e =>
+                        optionMinus(selectedOptionsCount, i, option[2][2])
+                      }
                       src={minus}
                       className="itemDetail-count-btn"
-                      alt="빼기 버튼"
+                      alt="빼기버튼"
                     />
                     <span className="itemDetail-count-number">
-                      {option[option.length - 1]}
+                      {selectedOptionsCount[i]}
                     </span>
                     <img
-                      onClick={e => optionPlus(selectedOptions)}
+                      onClick={e =>
+                        optionPlus(selectedOptionsCount, i, option[2][2])
+                      }
                       src={plus}
                       className="itemDetail-count-btn"
-                      alt="더하기 버튼"
+                      alt="더하기버튼"
                     />
                   </div>
                 </div>

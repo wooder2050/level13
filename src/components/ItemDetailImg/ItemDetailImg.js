@@ -5,6 +5,7 @@ import StoreBookmark from "../StoreBookmark/StoreBookmark";
 import ItemDetailOptions from "../ItemDetailOptions/ItemDetailOptions";
 import SelectedOption from "../SelectedOption/SelectedOption";
 import "./ItemDetailImg.scss";
+import { makeComma } from "../../reducers/utility";
 
 class ItemDetailImg extends Component {
   render() {
@@ -17,17 +18,24 @@ class ItemDetailImg extends Component {
       discount_price,
       discount_rate,
       options,
+      optionModal,
       optionState,
       toggleState,
       selectedOptions,
+      selectedOptionsCount,
       optionOpen,
       optionChoice,
       optionPlus,
       optionMinus
     } = this.props;
-    function makeComma(str) {
-      str = String(str);
-      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+    let sum = 0;
+    if (selectedOptions) {
+      for (let i = 0; i < selectedOptions.length; i++) {
+        if (selectedOptions[i][2])
+          sum +=
+            (discount_price + selectedOptions[i][2][1]) *
+            selectedOptionsCount[i];
+      }
     }
     return (
       <>
@@ -50,21 +58,24 @@ class ItemDetailImg extends Component {
           </div>
           <ItemDetailOptions
             options={options}
+            optionModal={optionModal}
             optionState={optionState}
             toggleState={toggleState}
             selectedOptions={selectedOptions}
+            selectedOptionsCount={selectedOptionsCount}
             optionOpen={optionOpen}
             optionChoice={optionChoice}
           />
           <SelectedOption
             discount_price={discount_price}
             selectedOptions={selectedOptions}
+            selectedOptionsCount={selectedOptionsCount}
             optionPlus={optionPlus}
             optionMinus={optionMinus}
           />
           <div className="itemDetail-total">
             <span className="itemDetail-totalText">총&nbsp;상품금액</span>
-            <span className="itemDetail-totalPrice">0원</span>
+            <span className="itemDetail-totalPrice">{makeComma(sum)}원</span>
           </div>
         </div>
       </>

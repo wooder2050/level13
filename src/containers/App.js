@@ -13,9 +13,14 @@ const mapStateToProps = state => {
     options,
     html,
     partner,
+    optionModal,
     optionState,
     toggleState,
-    selectedOptions
+    selectedOptions,
+    selectedOptionsCount,
+    optionCountError,
+    soldOutMsg,
+    alreadySelectedMsg
   } = state.load;
   return {
     name,
@@ -27,9 +32,14 @@ const mapStateToProps = state => {
     options,
     html,
     partner,
+    optionModal,
     optionState,
     toggleState,
-    selectedOptions
+    selectedOptions,
+    selectedOptionsCount,
+    optionCountError,
+    soldOutMsg,
+    alreadySelectedMsg
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -40,11 +50,14 @@ const mapDispatchToProps = dispatch => {
         response
       });
     },
-    optionOpen(optionState, toggleState) {
+    optionOpen(optionState, toggleState, index, options, optionModal) {
       dispatch({
         type: "OPTION_OPEN",
         optionState,
-        toggleState
+        toggleState,
+        index,
+        options,
+        optionModal
       });
     },
     optionChoice(
@@ -52,6 +65,7 @@ const mapDispatchToProps = dispatch => {
       toggleState,
       option,
       contentsLength,
+      selectedOptionsCount,
       selectedOptions
     ) {
       dispatch({
@@ -60,6 +74,7 @@ const mapDispatchToProps = dispatch => {
         toggleState,
         option,
         contentsLength,
+        selectedOptionsCount,
         selectedOptions
       });
     },
@@ -68,16 +83,25 @@ const mapDispatchToProps = dispatch => {
         type: "OPTION_CLOSE"
       });
     },
-    optionPlus(selectedOptions) {
+    optionPlus(selectedOptionsCount, index, count) {
       dispatch({
         type: "OPTION_PLUS",
-        selectedOptions
+        selectedOptionsCount,
+        index,
+        count
       });
     },
-    optionMinus(selectedOptions) {
+    optionMinus(selectedOptionsCount, index, count) {
       dispatch({
         type: "OPTION_MINUS",
-        selectedOptions
+        selectedOptionsCount,
+        index,
+        count
+      });
+    },
+    closeErrorModal() {
+      dispatch({
+        type: "CLOSE_ERROR_MODAL"
       });
     }
   };

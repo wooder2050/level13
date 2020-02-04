@@ -17,14 +17,20 @@ class App extends Component {
       options,
       html,
       partner,
+      optionModal,
       optionState,
       toggleState,
       selectedOptions,
+      selectedOptionsCount,
+      optionCountError,
+      soldOutMsg,
+      alreadySelectedMsg,
       optionOpen,
       optionChoice,
       optionClose,
       optionPlus,
-      optionMinus
+      optionMinus,
+      closeErrorModal
     } = this.props;
     console.log(this.props);
     return (
@@ -32,6 +38,30 @@ class App extends Component {
         <div className="app">
           {toggleState && (
             <div onClick={optionClose} className="toggle-wrapper"></div>
+          )}
+          {optionCountError && (
+            <div className="error-modal-wrapper">
+              <div className="error-modal-text">수량이 부족합니다.</div>
+              <div onClick={closeErrorModal} className="error-modal-btn">
+                닫기
+              </div>
+            </div>
+          )}
+          {soldOutMsg && (
+            <div className="error-modal-wrapper">
+              <div className="error-modal-text">품절입니다.</div>
+              <div onClick={closeErrorModal} className="error-modal-btn">
+                닫기
+              </div>
+            </div>
+          )}
+          {alreadySelectedMsg && (
+            <div className="error-modal-wrapper">
+              <div className="error-modal-text">이미 있는 상품입니다.</div>
+              <div onClick={closeErrorModal} className="error-modal-btn">
+                닫기
+              </div>
+            </div>
           )}
           <div className="itemDetail-wrapper">
             <ItemDetailImg
@@ -43,8 +73,10 @@ class App extends Component {
               discount_price={discount_price}
               discount_rate={discount_rate}
               options={options}
+              optionModal={optionModal}
               optionState={optionState}
               selectedOptions={selectedOptions}
+              selectedOptionsCount={selectedOptionsCount}
               toggleState={toggleState}
               optionOpen={optionOpen}
               optionChoice={optionChoice}
