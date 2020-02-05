@@ -36,7 +36,6 @@ class App extends Component {
       changeMainImg,
       optionChoiceCancel
     } = this.props;
-    console.log(this.props);
     return (
       <>
         <div className="app">
