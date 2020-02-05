@@ -33,12 +33,19 @@ class App extends Component {
       optionMinus,
       closeErrorModal,
       cancelSelected,
-      changeMainImg
+      changeMainImg,
+      optionChoiceCancel
     } = this.props;
     console.log(this.props);
     return (
       <>
         <div className="app">
+          {toggleState && (
+            <div
+              onClick={optionChoiceCancel}
+              className="option-cancel-wrapper"
+            ></div>
+          )}
           <ErroModal
             optionCountError={optionCountError}
             soldOutMsg={soldOutMsg}

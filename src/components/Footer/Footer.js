@@ -4,7 +4,6 @@ import "./Footer.scss";
 class Footer extends Component {
   render() {
     const { partner } = this.props;
-
     return (
       <div className="itemDetail-infoTab">
         <hr className="itemDetail-hr"></hr>

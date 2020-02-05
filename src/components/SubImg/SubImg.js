@@ -14,7 +14,7 @@ class SubImg extends Component {
                 key={i + 1}
                 className="sub-img-wrapper"
               >
-                <img src={img} className="sub-img" />
+                <img alt="sub" src={img} className="sub-img" />
               </div>
             );
           })}

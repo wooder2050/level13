@@ -96,17 +96,23 @@ const mapDispatchToProps = dispatch => {
         type: "CLOSE_ERROR_MODAL"
       });
     },
-    cancelSelected(selectedOptions, index) {
+    cancelSelected(selectedOptions, index, selectedOptionsCount) {
       dispatch({
         type: "CANCEL_SELECTED",
         selectedOptions,
-        index
+        index,
+        selectedOptionsCount
       });
     },
     changeMainImg(image) {
       dispatch({
         type: "CHANGE_MAIN_IMG",
         image
+      });
+    },
+    optionChoiceCancel() {
+      dispatch({
+        type: "OPTION_CHOICE_CANCEL"
       });
     }
   };

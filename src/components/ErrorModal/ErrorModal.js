@@ -9,7 +9,6 @@ class ErrorModal extends Component {
       alreadySelectedMsg,
       closeErrorModal
     } = this.props;
-
     return (
       <>
         {(optionCountError || soldOutMsg || alreadySelectedMsg) && (

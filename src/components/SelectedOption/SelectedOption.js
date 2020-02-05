@@ -28,7 +28,9 @@ class SelectedOption extends Component {
                     }`}
                   </div>
                   <span
-                    onClick={e => cancelSelected(selectedOptions, i)}
+                    onClick={e =>
+                      cancelSelected(selectedOptions, i, selectedOptionsCount)
+                    }
                     className="itemDetail-icon-cancel"
                   >
                     <span className="icon-cancel">+</span>

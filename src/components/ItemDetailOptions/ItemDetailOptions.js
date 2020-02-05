@@ -40,9 +40,7 @@ class ItemDetailOptions extends Component {
                     name
                   )}
                 </div>
-                <div
-                  className="option-select-icon"
-                >
+                <div className="option-select-icon">
                   <img alt="arrow-img" className="arrow" src={arrow} />
                 </div>
                 {options.contents[i] &&

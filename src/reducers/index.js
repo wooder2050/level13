@@ -7,7 +7,8 @@ import {
   OPTION_MINUS,
   CLOSE_ERROR_MODAL,
   CANCEL_SELECTED,
-  CHANGE_MAIN_IMG
+  CHANGE_MAIN_IMG,
+  OPTION_CHOICE_CANCEL
 } from "../constants/actionTypes";
 import {
   hasOption,
@@ -187,10 +188,13 @@ export function loadReducers(state = initialState, action) {
     case CANCEL_SELECTED:
       let newSelectedOption = action.selectedOptions.slice();
       newSelectedOption.splice(action.index, 1);
+      let newSelectedOptionCount = action.selectedOptionsCount.slice();
+      newSelectedOptionCount.splice(action.index, 1);
       return Object.assign(
         { ...state },
         {
-          selectedOptions: newSelectedOption
+          selectedOptions: newSelectedOption,
+          selectedOptionsCount: newSelectedOptionCount
         }
       );
     case CHANGE_MAIN_IMG:
@@ -198,6 +202,13 @@ export function loadReducers(state = initialState, action) {
         { ...state },
         {
           photo_url: action.image
+        }
+      );
+    case OPTION_CHOICE_CANCEL:
+      return Object.assign(
+        { ...state },
+        {
+          toggleState: false
         }
       );
     default:

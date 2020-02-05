@@ -1,4 +1,4 @@
-$highligthColor : #f23538;
+$highligthColor: #f23538;
 $font-default-color: #495057;
 
 .itemDetail-img-wrapper {
@@ -34,7 +34,7 @@ $font-default-color: #495057;
     }
   }
   .itemDetail-title-wrapper::after {
-    content: '';
+    content: "";
     display: block;
     clear: both;
   }
@@ -59,7 +59,7 @@ $font-default-color: #495057;
     }
   }
   .itemDetail-price-wrapper::after {
-    content: '';
+    content: "";
     display: block;
     clear: both;
   }
